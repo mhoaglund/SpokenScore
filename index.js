@@ -86,6 +86,7 @@ TwilioClient.queues.list(function (err, data) {
             global.currentQueuedCallers = queue.currentSize;
         }
     });
+    
     if (global.queueSid == 0) {
         winston.log('info', 'No queue found. Creating call queue.');
         TwilioClient.queues.create({
