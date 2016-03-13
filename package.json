@@ -1,0 +1,31 @@
+{
+  "name": "SpokenScore",
+  "version": "1.0.0",
+  "description": "Procedural Audio scoring utility",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mhoaglund/SpokenScore.git"
+  },
+  "keywords": [
+    "procedural",
+    "literature",
+    "audio",
+    "twilio"
+  ],
+  "author": "Maxwell Hoaglund mhoaglund.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mhoaglund/SpokenScore/issues"
+  },
+  "homepage": "https://github.com/mhoaglund/SpokenScore",
+  "dependencies": {
+    "async": "^1.5.2",
+    "express": "^4.13.4",
+    "twilio": "^2.9.0",
+    "winston": "^2.2.0"
+  }
+}
