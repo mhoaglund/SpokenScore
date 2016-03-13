@@ -1,0 +1,32 @@
+{
+    "Options":{
+        "MinPPTs":0,
+        "MaxPPTs":24,
+        "BranchingType":"Default",
+        "ProgressionType":"Stepped",
+        "Duration":300,
+        "DefaultStoch":0.5,
+        "BaseURL":"",
+        "FallbackURL":"",
+        "DropPolicy":"Default"
+    },
+    "ScoreBody":[{
+        "StepType":"Spoken",
+        "Duration":5
+    },
+    {
+        "StepType":"Spoken",
+        "Duration":5
+    }
+    ],
+    "AmbientBody":[{
+        "StepType":"Sound",
+        "Duration":300
+    }
+    ],
+    "Meta":{
+        "Author":"MHoaglund",
+        "PublishDate":"3/12/2016",
+        "Description":"5 min performance for Southern Theater"
+    }  
+}
