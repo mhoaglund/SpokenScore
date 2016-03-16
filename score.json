@@ -10,18 +10,31 @@
         "FallbackURL":"",
         "DropPolicy":"Default"
     },
-    "ScoreBody":[{
-        "StepType":"Spoken",
-        "Duration":5
-    },
-    {
-        "StepType":"Spoken",
-        "Duration":5
-    }
+    "ScoreBody":[
+        {
+            "StepType":"Delay",
+            "Scope":"All",
+            "Duration":5
+        },
+        {
+            "StepType":"Spoken",
+            "Duration":5,
+            "Callers":2,
+            "Voice":"Any",
+            "Content":""
+        },
+        {
+            "StepType":"Sound",
+            "Duration":0,
+            "Callers":2,
+            "Content":"bump"
+        }
     ],
     "AmbientBody":[{
         "StepType":"Sound",
-        "Duration":300
+        "Duration":300,
+        "Callers":2,
+        "Content":"cricket"
     }
     ],
     "Meta":{
