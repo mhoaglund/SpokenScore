@@ -72,7 +72,7 @@ global.queuename = 'spokenscore';
 global.queueSid = 0;
 //initial check/create of our queue
 var twilio = require('twilio');
-var TwilioClient = require('twilio')('', '');
+global.TwilioClient = require('twilio')('', '');
 
 TwilioClient.queues.list(function (err, data) {
     data.queues.forEach(function (queue) {

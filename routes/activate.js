@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var twilio = require('twilio');
-var TwilioClient = require('twilio')('', '');
+var TwilioClient = global.TwilioClient;
 var async = require('async');
 
 router.get('/', function (req, res) {
