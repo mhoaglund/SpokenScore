@@ -2,12 +2,13 @@ var express = require('express');
 var path = require('path');
 var winston = require('winston');
 var async = require('async');
+var extract = require('./extract'); //http://stackoverflow.com/questions/5797852/in-node-js-how-do-i-include-functions-from-my-other-files
 winston.add(winston.transports.File, { filename: 'activity.log' });
 
 var routes = require('./routes/main');
-// var activate = require('./routes/Activate');
+var activate = require('./routes/activate');
 // var call = require('./routes/Call');
-// var calldropped = require('./routes/CallDropped');
+var drop = require('./routes/drop');
 // var _deactivate = require('./routes/DeActivate');
 // var fallback = require('./routes/Fallback');
 var queue = require('./routes/queue');
@@ -23,9 +24,9 @@ app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-// app.use('/Activate', activate);
+app.use('/activate', activate);
 // app.use('/Call', call);
-// app.use('/CallDropped', calldropped);
+app.use('/drop', drop);
 // app.use('/DeActivate', _deactivate);
 // app.use('/Fallback', fallback);
 app.use('/queue', queue);
@@ -62,6 +63,11 @@ app.use(function (err, req, res, next) {
     });
 });
 
+global.callerPool = [];
+global.runningCallers = [];
+global.isStarted = false;
+global.voices = ['woman', 'man', 'Alice'];
+global.myAddress = 'http://perfectsilhouette.azurewebsites.net';
 global.queuename = 'spokenscore';
 global.queueSid = 0;
 //initial check/create of our queue
@@ -88,5 +94,26 @@ TwilioClient.queues.list(function (err, data) {
         });
     }
 });
+
+function RedirectCall(callsid, destination){
+    TwilioClient.calls(callsid).update({
+        url: global.myAddress + "/" + destination,
+        method: "GET"
+    }, function(){
+        global.callerPool.remove(callsid);
+        global.runningCallers.push(callsid);
+    });
+}
+
+Array.prototype.remove = function() {
+    var what, a = arguments, L = a.length, ax;
+    while (L && this.length) {
+        what = a[--L];
+        while ((ax = this.indexOf(what)) !== -1) {
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+};
 
 module.exports = app;
