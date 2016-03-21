@@ -5,37 +5,62 @@
         "BranchingType":"Default",
         "ProgressionType":"Stepped",
         "Duration":300,
-        "DefaultStoch":0.5,
+        "BaseStoch":0.5,
         "BaseURL":"",
+        "TestURL":"",
         "FallbackURL":"",
-        "DropPolicy":"Default"
+        "DropPolicy":"Default",
+        "AudioDirectory":"/Audio/"
     },
     "ScoreBody":[
         {
+            "Family":"ScoreStep",
             "StepType":"Delay",
-            "Scope":"All",
+            "DistributionType":"Prop",
             "Duration":5
         },
         {
-            "StepType":"Spoken",
-            "Duration":5,
-            "Callers":2,
-            "Voice":"Any",
-            "Content":""
+            "Family":"ScoreStep",
+            "StepType":"Sound",
+            "Duration":12,
+            "Callers":1,
+            "DistributionType":"Per",
+            "Content":"cricket"
         },
         {
-            "StepType":"Sound",
-            "Duration":0,
+            "Family":"ScoreStep",
+            "StepType":"Voice",
+            "Duration":"Full",
+            "DistributionType":"Per",
             "Callers":2,
-            "Content":"bump"
+            "Voice":"Any",
+            "Passages":[
+                "Do you feel compelled to be in sync with the people near you?",
+                "Are you seated inside a garden of trophies?",
+                "How often do you explain something without wanting it to be understood",
+                "Freely add to your family",
+                "Freely copy",
+                "A Lack",
+                "A reminder of a thing you already have",
+                "The arrival of a new machine",
+                "Center being",
+                "Well-formed whole",
+                "Center you."
+            ]
         }
     ],
-    "AmbientBody":[{
-        "StepType":"Sound",
-        "Duration":300,
-        "Callers":2,
-        "Content":"cricket"
-    }
+    "AmbientBody":[
+        {
+            "Family":"AmbientLayer",
+            "LayeringType":""
+        },
+        {
+            "Family":"ScoreStep",
+            "StepType":"Sound",
+            "Duration":300,
+            "Callers":2,
+            "Content":"cricket"
+        }
     ],
     "Meta":{
         "Author":"MHoaglund",
