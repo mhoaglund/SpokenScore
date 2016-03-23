@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var winston = require('winston');
 var async = require('async');
+var uuid = require('uuid');
 var score = require('./score'); //http://stackoverflow.com/questions/5797852/in-node-js-how-do-i-include-functions-from-my-other-files
 winston.add(winston.transports.File, { filename: 'activity.log' });
 
