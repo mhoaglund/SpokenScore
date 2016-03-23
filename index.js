@@ -105,6 +105,14 @@ function RedirectCall(callsid, destination){
     });
 }
 
+//when a caller drops but we want to preserve a feature, we have to rebuild
+//some following frames.
+function RecoverFeaturesForFrames(droppedCaller, score){
+    
+}
+
+//TODO: centralized time management
+
 Array.prototype.remove = function() {
     var what, a = arguments, L = a.length, ax;
     while (L && this.length) {
