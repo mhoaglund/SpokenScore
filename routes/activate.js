@@ -3,7 +3,7 @@ var router = express.Router();
 var twilio = require('twilio');
 var TwilioClient = global.TwilioClient;
 var async = require('async');
-var extract = require('../extract.js'); //http://stackoverflow.com/questions/5797852/in-node-js-how-do-i-include-functions-from-my-other-files
+var score = require('../score.js'); //http://stackoverflow.com/questions/5797852/in-node-js-how-do-i-include-functions-from-my-other-files
 
 router.get('/', function (req, res) {
         if (!global.isStarted) {
@@ -13,7 +13,6 @@ router.get('/', function (req, res) {
                 });
             });
             global.isStarted = true;
-            //extract.scoreSet();
         }
     res.render('index', { title: 'Express' });
 });
