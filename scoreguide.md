@@ -13,6 +13,7 @@ SpokenScores are json files with a few required elements and a few options for c
     Required Properties: 
     MinPPTs (minimum participants, Default: 0)
     MaxPPTs (maximum participants, Default: 24. Set to 0 for unlimited ppts)
+    PPTAccessPolicy (whether participants need to enter in order and be kept in order or not)
     BranchingType (aleatory decision-making within the composition. Default, Random, Protagonizing, None)
     ProgressionType (how the score moves through its time gradient. Stepped, Open, Random)
     BaseURL (the home domain where your server will live)

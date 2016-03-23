@@ -2,6 +2,7 @@
     "Options":{
         "MinPPTs":0,
         "MaxPPTs":24,
+        "PPTAccessPolicy":"Free",
         "BranchingType":"Default",
         "ProgressionType":"Stepped",
         "Duration":300,
