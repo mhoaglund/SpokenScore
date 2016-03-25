@@ -5,7 +5,7 @@ winston = require('winston'),
 async = require('async'),
 nconf = require('nconf'),
 score = require('./score'); //http://stackoverflow.com/questions/5797852/in-node-js-how-do-i-include-functions-from-my-other-files
-
+var scoreInstance = new score('./score.json');
 winston.add(winston.transports.File, { filename: 'activity.log' });
 
 var routes = require('./routes/main');
@@ -18,7 +18,7 @@ var queue = require('./routes/queue');
 // var moment = require('./routes/Moment');
 
 var app = express();
-nconf.argv().file({file: '/config.json'});
+nconf.argv().file({file: 'config.json'});
 
 //test comment
 // view engine setup
@@ -77,7 +77,7 @@ global.queuename = 'spokenscore';
 global.queueSid = 0;
 //initial check/create of our queue
 var twilio = require('twilio');
-global.TwilioClient = require('twilio')('', '');
+global.TwilioClient = require('twilio')(nconf.get('twilioAccountKey'), nconf.get('twilioAuthToken'));
 
 if(score.Score){
     global.TwilioClient.queues.list(function (err, data) {
