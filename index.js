@@ -1,18 +1,11 @@
-<<<<<<< HEAD
+
 var express = require('express'),
 path = require('path'),
 winston = require('winston'),
 async = require('async'),
 nconf = require('nconf'),
 score = require('./score'); //http://stackoverflow.com/questions/5797852/in-node-js-how-do-i-include-functions-from-my-other-files
-=======
-var express = require('express');
-var path = require('path');
-var winston = require('winston');
-var async = require('async');
-var uuid = require('uuid');
-var score = require('./score'); //http://stackoverflow.com/questions/5797852/in-node-js-how-do-i-include-functions-from-my-other-files
->>>>>>> 3f3c9e8c88ab2009b5993464dcc3be95ea995c09
+
 winston.add(winston.transports.File, { filename: 'activity.log' });
 
 var routes = require('./routes/main');

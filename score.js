@@ -1,5 +1,4 @@
 var fs = require("fs");
-<<<<<<< HEAD
 
 function ExtractScore(){
     var obj;
@@ -9,9 +8,7 @@ function ExtractScore(){
         return obj;
     });
 }
-=======
 var uuid = require('uuid');
->>>>>>> 3f3c9e8c88ab2009b5993464dcc3be95ea995c09
 //TODO:
 //Determine if this module is the right place to create a stack of time features (frames)
 //from this score.
