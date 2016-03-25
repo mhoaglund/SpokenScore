@@ -1,8 +1,9 @@
-var express = require('express');
-var path = require('path');
-var winston = require('winston');
-var async = require('async');
-var score = require('./score'); //http://stackoverflow.com/questions/5797852/in-node-js-how-do-i-include-functions-from-my-other-files
+var express = require('express'),
+path = require('path'),
+winston = require('winston'),
+async = require('async'),
+nconf = require('nconf'),
+score = require('./score'); //http://stackoverflow.com/questions/5797852/in-node-js-how-do-i-include-functions-from-my-other-files
 winston.add(winston.transports.File, { filename: 'activity.log' });
 
 var routes = require('./routes/main');
@@ -15,6 +16,8 @@ var queue = require('./routes/queue');
 // var moment = require('./routes/Moment');
 
 var app = express();
+nconf.argv().file({file: '/config.json'});
+
 //test comment
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -74,26 +77,29 @@ global.queueSid = 0;
 var twilio = require('twilio');
 global.TwilioClient = require('twilio')('', '');
 
-TwilioClient.queues.list(function (err, data) {
-    data.queues.forEach(function (queue) {
-        //console.log(queue.friendlyName + ' ' + queue.sid + 'currentSize: ' + queue.currentSize);
-        if (queue.friendlyName == global.queuename) {
-            global.queueSid = queue.sid;
-            global.currentQueuedCallers = queue.currentSize;
+if(score.Score){
+    global.TwilioClient.queues.list(function (err, data) {
+        data.queues.forEach(function (queue) {
+            //console.log(queue.friendlyName + ' ' + queue.sid + 'currentSize: ' + queue.currentSize);
+            if (queue.friendlyName == global.queuename) {
+                global.queueSid = queue.sid;
+                global.currentQueuedCallers = queue.currentSize;
+            }
+        });
+        
+        if (global.queueSid == 0) {
+            winston.log('info', 'No queue found. Creating call queue.');
+            TwilioClient.queues.create({
+                friendlyName: global.queuename
+            }, function (err, queue) {
+                if (err) console.log(err);
+                global.queueSid = queue.sid;
+                global.currentQueuedCallers = 0;
+            });
         }
     });
-    
-    if (global.queueSid == 0) {
-        winston.log('info', 'No queue found. Creating call queue.');
-        TwilioClient.queues.create({
-            friendlyName: global.queuename
-        }, function (err, queue) {
-            if (err) console.log(err);
-            global.queueSid = queue.sid;
-            global.currentQueuedCallers = 0;
-        });
-    }
-});
+}
+
 
 function RedirectCall(callsid, destination){
     TwilioClient.calls(callsid).update({
@@ -112,7 +118,6 @@ function RecoverFeaturesForFrames(droppedCaller, score){
 }
 
 //TODO: centralized time management
-
 Array.prototype.remove = function() {
     var what, a = arguments, L = a.length, ax;
     while (L && this.length) {
