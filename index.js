@@ -4,9 +4,10 @@ path = require('path'),
 winston = require('winston'),
 async = require('async'),
 nconf = require('nconf'),
-score = require('./score'); //http://stackoverflow.com/questions/5797852/in-node-js-how-do-i-include-functions-from-my-other-files
+score = require('./score');
 var scoreInstance = new score('./score.json');
-winston.add(winston.transports.File, { filename: 'activity.log' });
+nconf.argv().file({file: 'config.json'});
+winston.add(winston.transports.File, { filename: nconf.get('logFile') });
 
 var routes = require('./routes/main');
 var activate = require('./routes/activate');
@@ -18,7 +19,7 @@ var queue = require('./routes/queue');
 // var moment = require('./routes/Moment');
 
 var app = express();
-nconf.argv().file({file: 'config.json'});
+
 
 //test comment
 // view engine setup
@@ -72,14 +73,14 @@ global.callerPool = [];
 global.runningCallers = [];
 global.isStarted = false;
 global.voices = ['woman', 'man', 'Alice'];
-global.myAddress = 'http://perfectsilhouette.azurewebsites.net';
-global.queuename = 'spokenscore';
+global.myAddress = score.Score.Options.BaseURL;
+global.queuename = score.Score.Meta.Title;
 global.queueSid = 0;
-//initial check/create of our queue
+
 var twilio = require('twilio');
 global.TwilioClient = require('twilio')(nconf.get('twilioAccountKey'), nconf.get('twilioAuthToken'));
 
-if(score.Score){
+if(score.Score.Options.ProgressionType == "Stepped"){
     global.TwilioClient.queues.list(function (err, data) {
         data.queues.forEach(function (queue) {
             //console.log(queue.friendlyName + ' ' + queue.sid + 'currentSize: ' + queue.currentSize);
@@ -102,7 +103,7 @@ if(score.Score){
     });
 }
 
-
+//TODO: get to the bottom of the design reasoning behind this pair of arrays.
 function RedirectCall(callsid, destination){
     TwilioClient.calls(callsid).update({
         url: global.myAddress + "/" + destination,
